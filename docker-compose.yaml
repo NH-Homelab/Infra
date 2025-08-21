@@ -1,0 +1,30 @@
+# Helpful resource: https://github.com/felipewom/docker-compose-postgres
+services:
+  database:
+    image: 'postgres:latest'
+    ports:
+    - "5432:5432"
+    env_file:
+    - .env
+    volumes:
+    - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    - ~/.homelab-data/postgres-data/:/var/lib/postgresql/data
+  minio:
+    image: 'minio/minio:latest'
+    ports:
+    - "9000:9000"
+    env_file:
+    - .env
+    command: server /data
+    volumes:
+      - ~/.homelab-data/minio-data/:/data
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - 15433:80
+    env_file:
+      - .env
+    depends_on:
+      - database
+    volumes:
+      - ~/.homelab-data/pgadmin-data/:/var/lib/pgadmin/
