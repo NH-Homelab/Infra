@@ -13,6 +13,7 @@ services:
     image: 'minio/minio:latest'
     ports:
     - "9000:9000"
+    - "9001:9001"
     env_file:
     - .env
     command: server /data
