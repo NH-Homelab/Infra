@@ -23,6 +23,13 @@ jobs:
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
+      - name: Add Helm Repositories
+        run: |
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add runix https://helm.runix.net
+          helm repo add cloudflare https://cloudflare.github.io/helm-charts
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          helm repo update
       - name: Build Chart Dependencies
         run: helm dependency build charts/platform
       - name: Deploy Platform Layer
