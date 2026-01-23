@@ -43,6 +43,7 @@ jobs:
           GRAFANA_PASS: ${{ secrets.GRAFANA_ADMIN_PASSWORD }}
         run: |
           helm upgrade --install production-infra charts/platform \
+            --dependency-update \
             --namespace homelab \
             --create-namespace \
             --set tunnel.cloudflare.tunnel_token="$TUNNEL_TOKEN" \
