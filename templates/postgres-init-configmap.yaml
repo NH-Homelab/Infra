@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init-scripts
+  namespace: {{ .Release.Namespace }}
+data:
+  create_tables.sql: |
+{{ .Files.Get "db/create_tables.sql" | indent 4 }}
+  portfolio.sql: |
+{{ .Files.Get "db/portfolio.sql" | indent 4 }}
