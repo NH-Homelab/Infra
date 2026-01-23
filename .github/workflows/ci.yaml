@@ -4,10 +4,12 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'Chart.yaml'
-      - 'values.yaml'
-      - 'db/**'
+      - 'charts/platform/Chart.yaml'
+      - 'charts/platform/values.yaml'
+      - 'charts/platform/db/**'
+      - 'charts/platform/templates/**'
       - '.github/workflows/ci.yaml'
+  workflow_dispatch:
 jobs:
   deploy-platform:
     runs-on: k8s-prod-k3s
@@ -22,7 +24,7 @@ jobs:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
       - name: Update Chart Dependencies
-        run: helm dependency update .
+        run: helm dependency update charts/platform
       - name: Deploy Platform Layer
         env:
           TUNNEL_TOKEN: ${{ secrets.CLOUDFLARE_TUNNEL_TOKEN }}
@@ -33,7 +35,7 @@ jobs:
           PGADMIN_PASS: ${{ secrets.PGADMIN_PASSWORD }}
           GRAFANA_PASS: ${{ secrets.GRAFANA_ADMIN_PASSWORD }}
         run: |
-          helm upgrade --install production-infra . \
+          helm upgrade --install production-infra charts/platform \
             --namespace homelab \
             --create-namespace \
             --set tunnel.cloudflare.tunnel_token="$TUNNEL_TOKEN" \

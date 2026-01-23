@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }} # e.g., "auth-service"
+spec:
+  type: ClusterIP  # Internal only! Nginx will talk to this.
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+  selector:
+    app: {{ .Release.Name }}

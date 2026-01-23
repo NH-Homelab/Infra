@@ -1,5 +1,5 @@
 apiVersion: v2
-name: platform-infrastructure
+name: homelab-infrastructure
 description: Base infrastructure (pgadmin, postgres, minio, cloudflared tunnel)
 type: application
 version: 0.1.0
