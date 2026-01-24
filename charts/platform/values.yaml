@@ -1,0 +1,70 @@
+db:
+  enabled: true
+  fullnameOverride: "homelab-postgres"
+  auth:
+    # Password is injected via GitHub Actions/Helm --set
+    postgresPassword: "REPLACE_ME_FROM_CI"
+    database: "nh_homelab"
+  primary:
+    persistence:
+      enabled: true
+      size: 8Gi
+    initdb:
+      scriptsConfigMap: "postgres-init-scripts"
+  service:
+    type: ClusterIP
+    ports:
+      postgresql: 5432
+minio:
+  enabled: true
+  fullnameOverride: "homelab-minio"
+  auth:
+    # Credentials are injected via GitHub Actions/Helm --set
+    rootUser: "REPLACE_ME_FROM_CI"
+    rootPassword: "REPLACE_ME_FROM_CI"
+  persistence:
+    enabled: true
+    size: 10Gi
+  defaultBuckets: "portfolioassets"
+pgadmin4:
+  enabled: true
+  fullnameOverride: "homelab-pgadmin"
+  env:
+    # Credentials are injected via GitHub Actions/Helm --set
+    email: "REPLACE_ME_FROM_CI"
+    password: "REPLACE_ME_FROM_CI"
+  service:
+    type: ClusterIP
+    port: 80
+  ingress:
+    enabled: false 
+    hosts:
+      - host: pgadmin.local
+        paths:
+          - path: /
+            pathType: Prefix
+tunnel:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: cloudflare/cloudflared
+    pullPolicy: IfNotPresent
+  cloudflare:
+    # Token is injected via GitHub Actions/Helm --set
+    tunnel_token: "REPLACE_ME_FROM_CI"
+prometheus:
+  enabled: true
+  prometheus:
+    prometheusSpec:
+      retention: 7d
+      storageSpec:
+        volumeClaimTemplate:
+          spec:
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 10Gi
+  grafana:
+    enabled: true
+    # Password is injected via GitHub Actions/Helm --set
+    adminPassword: "REPLACE_ME_FROM_CI"

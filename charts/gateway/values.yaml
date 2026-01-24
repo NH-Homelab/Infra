@@ -1,0 +1,7 @@
+image:
+  repository: ghcr.io/your-user/gateway-nginx
+  tag: latest
+
+service:
+  type: ClusterIP
+  port: 443
