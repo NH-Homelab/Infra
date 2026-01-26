@@ -91,6 +91,10 @@ loki:
       replication_factor: 1
     storage:
       type: filesystem
+    limits_config:
+      volume_enabled: true
+      max_volume_bytes_per_stream: 5GB
+      volume_store_interval: 30s
     persistence:
       enabled: true
       size: 10Gi
