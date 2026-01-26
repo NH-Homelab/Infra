@@ -20,16 +20,20 @@ db:
 minio:
   enabled: true
   fullnameOverride: "homelab-minio"
-  image:
-    tag: "2025.1.17-debian-12-r0"
-  auth:
-    # Credentials are injected via GitHub Actions/Helm --set
-    rootUser: "REPLACE_ME_FROM_CI"
-    rootPassword: "REPLACE_ME_FROM_CI"
+  mode: standalone
+  rootUser: "REPLACE_ME_FROM_CI"
+  rootPassword: "REPLACE_ME_FROM_CI"
   persistence:
     enabled: true
     size: 10Gi
-  defaultBuckets: "portfolioassets"
+    storageClass: "local-path"
+  buckets:
+    - name: portfolioassets
+      policy: none
+      purge: false
+  resources:
+    requests:
+      memory: 512Mi
 pgadmin4:
   enabled: true
   fullnameOverride: "homelab-pgadmin"
