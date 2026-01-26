@@ -26,6 +26,7 @@ jobs:
       - name: Add Helm Repositories
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add minio https://charts.min.io/
           helm repo add runix https://helm.runix.net
           helm repo add cloudflare https://cloudflare.github.io/helm-charts
           helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
@@ -48,8 +49,8 @@ jobs:
             --create-namespace \
             --set tunnel.cloudflare.tunnel_token="$TUNNEL_TOKEN" \
             --set db.auth.postgresPassword="$DB_PASS" \
-            --set minio.auth.rootUser="$MINIO_USER" \
-            --set minio.auth.rootPassword="$MINIO_PASS" \
+            --set minio.rootUser="$MINIO_USER" \
+            --set minio.rootPassword="$MINIO_PASS" \
             --set pgadmin4.env.email="$PGADMIN_EMAIL" \
             --set pgadmin4.env.password="$PGADMIN_PASS" \
             --set prometheus.grafana.adminPassword="$GRAFANA_PASS"
