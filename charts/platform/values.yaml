@@ -1,6 +1,8 @@
 db:
   enabled: true
   fullnameOverride: "homelab-postgres"
+  image:
+    tag: "latest"
   auth:
     # Password is injected via GitHub Actions/Helm --set
     postgresPassword: "REPLACE_ME_FROM_CI"
@@ -45,7 +47,7 @@ pgadmin4:
             pathType: Prefix
 tunnel:
   enabled: true
-  replicaCount: 2
+  replicaCount: 1
   image:
     repository: cloudflare/cloudflared
     pullPolicy: IfNotPresent

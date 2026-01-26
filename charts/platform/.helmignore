@@ -36,4 +36,5 @@ Dockerfile
 # Minikube/local dev
 launch-minikube.sh
 # Helm dependency charts (managed by helm dependency)
-charts/*.tgz
+# charts/*.tgz  # REMOVED: This was preventing dependencies from being included!
+values.local.yaml
