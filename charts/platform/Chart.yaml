@@ -29,3 +29,8 @@ dependencies:
     repository: https://prometheus-community.github.io/helm-charts
     alias: prometheus
     condition: prometheus.enabled
+  - name: loki-stack
+    version: ^2.10.0
+    repository: https://grafana.github.io/helm-charts
+    alias: loki
+    condition: loki.enabled
